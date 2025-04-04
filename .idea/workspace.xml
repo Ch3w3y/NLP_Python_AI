@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40ca3ced-715a-413d-8065-5ad6c233b2bb" name="Changes" comment="First commit" />
+    <list default="true" id="40ca3ced-715a-413d-8065-5ad6c233b2bb" name="Changes" comment="Second Commit; Added LLM + Oneshot methodologies, LLM GPU Acceleration via Nvidia CUDA (Ran on 1x rtx 3090 in ~0.460s per record). Note Zeroshot script works under Windows 11 and Ubuntu, LLM script only functional under WSL2/Linux due to package versions.">
+      <change beforePath="$PROJECT_DIR$/.idea/NLP_Python_AI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NLP_Python_AI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +16,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Unit Test" />
         <option value="Python Script" />
       </list>
     </option>
@@ -20,21 +24,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ch3w3y"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ch3w3y&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ch3w3y/NLP_Python_AI.git",
-    "accountId": "26c1b705-bb6b-42ff-8c38-ed56a288460c"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ch3w3y/NLP_Python_AI.git&quot;,
+    &quot;accountId&quot;: &quot;26c1b705-bb6b-42ff-8c38-ed56a288460c&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2vBCsvq0AR8XxLnbyANvFZecl34" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -43,11 +47,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.LLM_NLP.executor": "Run",
+    "Python.LLM_NLP_Transformers_Mixtral.executor": "Run",
     "Python.NLP_BERT_zeroshot.executor": "Run",
     "Python.generate_dummy_data.executor": "Run",
+    "Python.test_gpy.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master"
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/daryn/AppData/Local/Microsoft/WindowsApps/PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0/python3.13.exe",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RunManager">
@@ -103,7 +112,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743627198067</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Second Commit; Added LLM + Oneshot methodologies, LLM GPU Acceleration via Nvidia CUDA (Ran on 1x rtx 3090 in ~0.460s per record). Note Zeroshot script works under Windows 11 and Ubuntu, LLM script only functional under WSL2/Linux due to package versions.">
+      <option name="closed" value="true" />
+      <created>1743799095067</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743799095067</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,6 +136,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Second Commit; Added LLM + Oneshot methodologies, LLM GPU Acceleration via Nvidia CUDA (Ran on 1x rtx 3090 in ~0.460s per record). Note Zeroshot script works under Windows 11 and Ubuntu, LLM script only functional under WSL2/Linux due to package versions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Second Commit; Added LLM + Oneshot methodologies, LLM GPU Acceleration via Nvidia CUDA (Ran on 1x rtx 3090 in ~0.460s per record). Note Zeroshot script works under Windows 11 and Ubuntu, LLM script only functional under WSL2/Linux due to package versions." />
   </component>
 </project>
