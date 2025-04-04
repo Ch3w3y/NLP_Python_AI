@@ -1,8 +1,8 @@
 # created by virtualenv automatically
-/include
-/Lib
-/Scripts
-/share
+./include
+./Lib
+./Scripts
+./share
 pyenv.cfg
-/.idea
+./.idea
 mixtral*
