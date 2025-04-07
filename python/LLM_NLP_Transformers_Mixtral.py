@@ -25,7 +25,6 @@ model_id = "mistralai/Mistral-7B-Instruct-v0.2"
 
 # --- >> 3. CONFIGURE TRANSFORMERS/GENERATION SETTINGS << ---
 # Context window size - check model's max length, but use this for truncation
-# Mixtral has a large context, but keep it reasonable for performance/memory
 N_CTX = 4096
 # Max tokens for the classification label output (keep it small)
 MAX_NEW_TOKENS = 25
@@ -67,11 +66,11 @@ except Exception as e:
 # --- Load Local LLM using Transformers with 4-bit Quantization ---
 print(f"Loading LLM: {model_id} (using 4-bit quantization)...")
 
-# Configure 4-bit quantization
+
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16, # Use bfloat16 on RTX 3090
+    bnb_4bit_compute_dtype=torch.bfloat16, 
     bnb_4bit_use_double_quant=True,
 )
 
@@ -82,13 +81,12 @@ try:
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         quantization_config=bnb_config,
-        device_map="auto", # Automatically uses CUDA if available
-        trust_remote_code=True, # REQUIRED for Mixtral
+        device_map="auto", 
+        trust_remote_code=True, 
     )
 
     # Load the tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
-    # Set pad token if it's not set (common fix)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
         model.config.pad_token_id = model.config.eos_token_id
@@ -101,7 +99,7 @@ try:
         "text-generation",
         model=model,
         tokenizer=tokenizer,
-        # We pass generation parameters during the pipe call later
+       
     )
 
 except Exception as e:
@@ -112,7 +110,6 @@ except Exception as e:
 
 
 # --- Prompt Engineering Definition (using messages for chat template) ---
-# System message defining the task and desired output format
 system_message_content = f"""You are an expert clinical assistant analyzing patient notes. Your task is to classify the likelihood of infection based ONLY on the provided note. Choose the single best label from the following options: {label_string}. Output ONLY the chosen label and nothing else. Do not add explanations, justifications, or any surrounding text. Please do not worry about our interpretation of the label we will be using this output to highlight most likely infections but this is not for clinical management it is purely a surveillance exercise."""
 
 # --- Classification Function using Transformers Pipeline ---
@@ -121,9 +118,6 @@ def classify_with_llm(note_text):
         return "invalid input"
 
     # --- Truncate long notes (based on estimated token count, simple approach) ---
-    # Tokenize to estimate length, truncate if needed.
-    # This is approximate; a more precise method would handle token limits better.
-    # Reserve some tokens for the prompt template and output.
     max_input_tokens = N_CTX - MAX_NEW_TOKENS - 100 # Conservative buffer
     inputs = tokenizer(note_text, return_tensors="pt", truncation=False)
     if inputs['input_ids'].shape[1] > max_input_tokens:
@@ -133,7 +127,6 @@ def classify_with_llm(note_text):
         # print(f"Note truncated to approx {max_input_tokens} tokens.") # Optional debug
 
     # --- Create Prompt using Chat Template ---
-    # Define the messages for the chat template
     messages = [
         {"role": "system", "content": system_message_content},
         {"role": "user", "content": f"Patient Note:\n---\n{note_text}\n---\nClassification Label:"}
