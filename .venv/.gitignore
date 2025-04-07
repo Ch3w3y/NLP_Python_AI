@@ -6,3 +6,4 @@
 pyenv.cfg
 ./.idea
 mixtral*
+*.sh
