@@ -75,8 +75,7 @@ def classify_infection_status(note_text):
     try:
         result = classifier(note_text, infection_labels, multi_label=False)
         predicted_label = result['labels'][0]
-        score = result['scores'][0] # You can access the confidence score
-        #Optional: Print score for debugging
+        score = result['scores'][0] 
         print(f"Note: '{note_text[:30]}...' -> {predicted_label} ({score:.2f})")
         return predicted_label
     except Exception as e:
