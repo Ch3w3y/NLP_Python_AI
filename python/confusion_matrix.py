@@ -18,6 +18,7 @@ predicted_label_col = "infection_status"
 # Handles variations like TRUE/FALSE, 1/0 (as strings or numbers) ## THIS IS IMPORTANT WHEN FEEDING IN A TEXT CLASSIFICATION MODEL
 # LIKE THE ONE USED IN THIS REPO, YOUR LABELS SHOULD BE TIGHT IN TERMS OF ALIGNMENT TO POSITIVE OR NEGATIVE FINDING/SENTIMENT.
 positive_values = [
+    "Likely infection",
     "true",
     "1",
     1,
@@ -25,6 +26,7 @@ positive_values = [
 ]  # Extend if inputs change, i.e new datasets or you change your mind on how the model should handle labels, in this example this could be
    # Definite Infection vs No evidence of infection. etc.
 negative_values = [
+    "No evidence of infection.",
     "false",
     "0",
     0,
