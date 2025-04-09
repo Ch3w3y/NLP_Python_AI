@@ -8,26 +8,29 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np # Import numpy for isnan check
+import numpy as np 
 
 # --- Configuration ---
 csv_filename = "dummy_data_classified.csv"
 true_label_col = "clinical_confirmed_infection"
 predicted_label_col = "infection_status"
 # Define what values represent 'Positive' (Infection) and 'Negative'
-# Handles variations like TRUE/FALSE, 1/0 (as strings or numbers)
+# Handles variations like TRUE/FALSE, 1/0 (as strings or numbers) ## THIS IS IMPORTANT WHEN FEEDING IN A TEXT CLASSIFICATION MODEL
+# LIKE THE ONE USED IN THIS REPO, YOUR LABELS SHOULD BE TIGHT IN TERMS OF ALIGNMENT TO POSITIVE OR NEGATIVE FINDING/SENTIMENT.
 positive_values = [
     "true",
     "1",
     1,
     True,
-]  # Add other variations if needed
+]  # Extend if inputs change, i.e new datasets or you change your mind on how the model should handle labels, in this example this could be
+   # Definite Infection vs No evidence of infection. etc.
 negative_values = [
     "false",
     "0",
     0,
     False,
-]  # Add other variations if needed
+]  # Extend if inputs change, i.e new datasets or you change your mind on how the model should handle labels, in this example this could be
+   # Definite Infection vs No evidence of infection. etc.
 
 # --- Load Data ---
 try:
@@ -68,9 +71,8 @@ y_pred = df[predicted_label_col].apply(normalize_label)
 if y_true.isnull().any() or y_pred.isnull().any():
     print("\nError: Found unrecognized values in label columns.")
     print(f"Please ensure '{true_label_col}' and '{predicted_label_col}' contain only values representing True/Positive ({positive_values}) or False/Negative ({negative_values}).")
-    # Optional: Show rows with issues
-    # print("\nRows with problematic values:")
-    # print(df[y_true.isnull() | y_pred.isnull()])
+    print("\nRows with problematic values:")
+    print(df[y_true.isnull() | y_pred.isnull()])
     exit()
 
 # Convert to integer type after ensuring no NaNs
@@ -83,32 +85,23 @@ print(f"Unique Predicted Labels found (after normalization): {y_pred.unique()}")
 
 
 # --- Calculate Confusion Matrix ---
-# Ensure labels are [0, 1] for standard TN, FP, FN, TP interpretation
-# If only one class exists in either true or pred, confusion_matrix might behave differently
+
 unique_labels = sorted(pd.concat([y_true, y_pred]).unique())
 if len(unique_labels) == 0:
     print("\nError: No valid labels found after processing.")
     exit()
 elif len(unique_labels) == 1:
-    # Handle case where only one class (0 or 1) is present overall
-    # We need to force the matrix to be 2x2 for consistent TN/FP/FN/TP extraction
-    # If only 0 is present, cm will be [[N, 0], [0, 0]]
-    # If only 1 is present, cm will be [[0, 0], [0, N]]
+
     print(f"\nWarning: Only one class ({unique_labels[0]}) present in the data or predictions.")
     cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
 else:
-    # Standard case with both 0 and 1 present
-    cm = confusion_matrix(y_true, y_pred, labels=[0, 1]) # Explicitly set labels=[0, 1]
+    cm = confusion_matrix(y_true, y_pred, labels=[0, 1]) 
 
 print("\n--- Confusion Matrix ---")
 print("         Predicted No (0)  Predicted Yes (1)")
 print(f"Actual No (0)    {cm[0][0]:<15} {cm[0][1]:<15}")
 print(f"Actual Yes (1)   {cm[1][0]:<15} {cm[1][1]:<15}")
 
-# --- Extract TP, TN, FP, FN ---
-# Based on standard convention where matrix is:
-# [[TN, FP],
-#  [FN, TP]]
 tn = cm[0][0]
 fp = cm[0][1]
 fn = cm[1][0]
@@ -121,8 +114,7 @@ print(f"False Negatives (FN): {fn} (Incorrectly predicted 'No Infection' - Type 
 print(f"True Positives (TP):  {tp} (Correctly predicted 'Infection')")
 
 # --- Calculate Performance Metrics ---
-# Use zero_division=0 to avoid warnings/errors if a denominator is zero
-# (e.g., no positive predictions means precision is undefined/0)
+
 accuracy = accuracy_score(y_true, y_pred)
 precision = precision_score(y_true, y_pred, zero_division=0)
 recall = recall_score(y_true, y_pred, zero_division=0) # Also known as Sensitivity or True Positive Rate
@@ -139,17 +131,17 @@ print(f"Specificity: {specificity:.4f} (TN / (TN + FP)) - Out of actual negative
 print(f"F1-Score:    {f1:.4f} (Harmonic mean of Precision and Recall)")
 
 
-# --- Visualize Confusion Matrix (Optional) ---
+# --- Visualize Confusion Matrix  ---
 try:
     plt.figure(figsize=(7, 5))
     sns.heatmap(
         cm,
         annot=True,
-        fmt="d", # Format as integer
+        fmt="d", 
         cmap="Blues",
         xticklabels=["Predicted No (0)", "Predicted Yes (1)"],
         yticklabels=["Actual No (0)", "Actual Yes (1)"],
-        annot_kws={"size": 14} # Increase annotation font size
+        annot_kws={"size": 14} 
     )
     plt.ylabel("True Label")
     plt.xlabel("Predicted Label")
